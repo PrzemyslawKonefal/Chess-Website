@@ -1,0 +1,332 @@
+body{
+  background: #222930;
+  font-family: 'Crimson Text', serif;
+}
+.navbar  a{
+  color: inherit;
+}
+.navbar a:hover{
+  color: inherit;
+  text-decoration: none;
+}
+.container{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+.container >input{
+  width: 65%;
+  height: 40px;
+}
+.navbar{
+  width: 100%;
+  height: 70px;
+  background: #76bf2c;
+  box-shadow: 0 2px 5px #000;
+  color: #fff;
+  justify-content: center;
+  font-size: 30px;
+  text-shadow: 1px 1px #000;
+  flex-wrap: nowrap;
+}
+.navbar > a, .dropdown{
+  margin: 0 1% 0 1%;
+}
+.dropdown-content{
+  position: absolute;
+  display: none;
+  width: 300%;
+  left: -100%;
+  background: #2d3640;
+  box-shadow: 0 7px 10px #191e24;
+  border-radius: 10px;
+  z-index: 100;
+  font-size: 24px;
+}
+#levels{
+width: 200%;
+left: -50%;
+}
+.dropdown{
+  position: relative;
+  padding: 5px 15px;
+  border-radius: 5px 5px 0 0;
+}
+.dropdown:hover{
+  background: #2d3640;
+}
+.dropdown >p{
+  margin: 0;
+}
+.dropdown:hover > .dropdown-content{
+  display: block;
+  border-left: 1px solid #191e24;
+  border-right: 1px solid #191e24;
+}
+.dropdown-content a{
+  display: block;
+  text-align: center;
+}
+.dropdown-content a:hover{
+  color: #76bf2c;
+}
+.dropdown-content >a::before{
+  content: "• ";
+  color: #76bf2c;
+}
+.container > button{
+  height: 50px;
+  cursor: pointer;
+}
+.container > button:first-of-type{
+  width: 60%;
+}
+.container > button:nth-of-type(2){
+  width: 30%;
+}
+#forgot{
+  color: #58b5f9;
+  transition: .4s ease;
+}
+#forgot:hover{
+  color: #31658b;
+}
+#forgot::before{
+  content: none;
+}
+.categories{
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: 1fr 2fr;
+  grid-gap: 50px;
+  width: 800px;
+  margin: auto;
+  margin-top: 50px;
+}
+.category{
+ position: relative;
+ display: flex;
+ align-items: center;
+ color: #fff;
+ justify-content: center;
+ cursor: pointer;
+ border: 1px solid #000;
+}
+.category:hover .color{
+  background: rgba(118, 191, 44, 0.62);
+}
+.category > a{
+  font-size: 30px;
+  text-align: center;
+  z-index: 2;
+  line-height: 100px;
+  text-shadow: 1px 1px 5px #000;
+}
+.color{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  transition: .4s ease;
+}
+.category:nth-of-type(6n-5){
+  background: url(../img/chesspieces/wikipedia/bK.png) center no-repeat;
+}
+.category:nth-of-type(6n-4){
+  background: url(../img/chesspieces/wikipedia/bQ.png) center no-repeat;
+}
+.category:nth-of-type(6n-3){
+  background: url(../img/chesspieces/wikipedia/bR.png) center no-repeat;
+}
+.category:nth-of-type(6n-2){
+  background: url(../img/chesspieces/wikipedia/bN.png) center no-repeat;
+}
+.beginner:nth-of-type(1){
+  grid-column: 1/4;
+}
+.beginner:nth-of-type(2){
+  grid-column: 4/7;
+}
+.beginner:nth-of-type(3){
+  grid-column: 1/7;
+}
+.beginner:nth-of-type(3) > a{
+  line-height: 150px;
+  font-size: 36px;
+}
+.grid{
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  margin-top: 5px;
+}
+.box{
+  grid-column: 2/3;
+}
+.info-right{
+  grid-column: 3/4;
+  background: #00b4c6;
+  border-radius: 15% 0 0 15%;
+  height: 90vh;
+  border-left: 1px solid #000;
+  border-top: 1px solid #000;
+  overflow: hidden;
+  box-shadow: 0 0 10px #000;
+}
+.info-inside{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 2fr 1fr 3fr;
+  grid-row-gap: 10px;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100%;
+  background: #3d4955;
+  border-radius: 15% 0 0 15%;
+  margin: 20px 0 0 20px;
+  border: 1px solid #000;
+  border-right: none;
+  overflow: hidden;
+}
+.info-inside > p{
+  text-align: center;
+}
+#success{
+  opacity: 0;
+  grid-column: 1/3;
+  text-align: center;
+  vertical-align: middle;
+  color: #76bf2c;
+  transition: .3s ease;
+  margin-left: 20%;
+  margin-right: 20%;
+  background: rgb(28, 35, 52);
+  border: 2px solid;
+  height: 55px;
+  text-shadow: 2px 2px #000;
+}
+#tip{
+  position: relative;
+  font-size: 30px;
+  line-height: 50px;
+  grid-column: 1/3;
+  margin: 0 10% 0 10%;
+  padding: 0 5% 0 5%;
+  background: #222930;
+  height: 50px;
+  border-radius: 5px 5px 0 0;
+  color: #d7b62b;
+  text-shadow: 2px 2px #000;
+  transition: .4s ease;
+  border: 1px solid #000;
+}
+#tip:hover{
+  cursor: pointer;
+  background: #1d2329;
+}
+#sign{
+  display: inline-block;
+  transform: rotate(90deg);
+  float: right;
+  margin-right: 10%;
+  font-size: 1.2em;
+  transition: .3s ease;
+}
+.drop{
+  position: absolute;
+  opacity: 0;
+  transition: .4s ease;
+  width: 100%;
+  height: 1px;
+  overflow: hidden;
+  background: #1d2329;
+  left: 0;
+  border: 1px solid #000;
+  padding: 0 5% 0 5%;
+}
+.drop > p {
+  text-align: justify;
+}
+#board{
+  width: 500px;
+  margin: auto;
+  margin-top: 20px;
+}
+.clock{
+  display: flex;
+  justify-content: center;
+  grid-column: 1/3;
+  align-items: center;
+  font-size: 40px;
+}
+.clock >img{
+  height: 70px;
+  margin-left: 10%;
+}
+.nextProb{
+  display: flex;
+  justify-content: center;
+  grid-column: 1/3;
+  align-items: center;
+}
+.rotate{
+  position: relative;
+  height: 35px;
+  width: 35px;
+    background: #00b4c6;
+  transform: rotate(45deg);
+  left: -17px;
+  transition: .3s ease;
+  border: 1px solid #000;
+}
+.next{
+  font-size: 2em;
+  background: #00b4c6;
+  width: 60%;
+  text-align: center;
+  margin: auto;
+  transition: .3s ease;
+  height: 50px;
+  margin: 0;
+  z-index: 2;
+  border: 1px solid #000;
+  border-right: none;
+  transition: .4s ease;
+}
+.next:hover{
+  background: #007480;
+  color: #fff;
+  text-shadow: 0 0 10px #000;
+  cursor: pointer;
+}
+.next:hover + .rotate{
+  background: #007480;
+}
+#options{
+  font-size: 18px;
+  padding: 5px;
+  background: #222930;
+  border: 1px solid #000;
+  border-left: none;
+  color: #d7b62b;
+  text-shadow: 2px 2px #000;
+}
+#notation{
+  position: relative;
+  margin-left: 5px;
+  top: 12px;
+}
+#moves{
+  background: #1d2329;
+  margin-right: 10%;
+  border: 1px solid #000;
+  border-left: none;
+}
+#toPlay{
+  display: flex;
+}
+#who{
+  margin-left: 5px;
+  width: 30px;
+  height: 30px;
+  border: 1px solid gray;
+}
