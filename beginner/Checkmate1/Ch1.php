@@ -8,6 +8,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <link rel="stylesheet" href="../../css/css.css">
     <link rel="stylesheet" href="../../css/chessboard-0.3.0.min.css">
+    <?php
+    session_start();
+    $_SESSION['ID'] = -1;
+    $_SESSION['movesCounter'] = 0;
+    $_SESSION['Table'] = "checkmates1"
+     ?>
     <title></title>
   </head>
   <body>
@@ -46,15 +52,19 @@
         </div>
         <div class="info-right">
           <div class="info-inside">
+            <div class="score">
+              <span>Score: <span id="score" style="color:#5ab40b">0</span> / <span id="attempts" style="color: #5ab40b">0</span> <br>
+               Correct: <span id="correct" style="color:#5ab40b"></span>% </span>
+            </div>
             <div class="clock">
               <span id="min">00</span>:<span id="sec">00</span>
               <img src="img/hourglass.png" alt="clock">
             </div>
             <h1 id="success"></h1>
             <div id="options">
-              <div id="toPlay"><p>To Play:</p><div id="who" style="background:#fff"></div> </div>
-              <p>White Castling: Both</p>
-              <p>Black Castling: None</p>
+              <div id="toPlay"><p>To Play:</p><div id="who"></div> </div>
+              <p>White Castling: <span id="whiteCast"></span></p>
+              <p>Black Castling: <span id="blackCast"></span></p>
               <div style="display:flex"><p>Notation:</p><input type="checkbox"  id="notation"></div>
             </div>
             <div id="moves">PGN: <span id="pgn"></span></div>
@@ -71,16 +81,16 @@
         </div>
     </div>
 
-    <data id="position" value="rn1qkbnr/ppp2Bp1/3p3p/4N3/4P3/2N5/PPPP1PPP/R1BbK2R b KQkq - 0 6"></data>
-    <data id="mov" value="e8-e7"></data>
-    <data id="cor" value="rn1q1bnr/ppp1kBp1/3p3p/3NN3/4P3/8/PPPP1PPP/R1BbK2R"></data>
+    <data id="start" style="display:none"></data>
+    <data id="move" style="display:none"></data>
+    <data id="player" style="display:none"></data>
+    <data id="additional" style="display:none"></data>
     <script src="https://code.jquery.com/jquery-3.3.1.js"integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.js"></script>
     <script src="../../js/chessboard-0.3.0.js"></script>
     <script src="../../js/js.js"></script>
-    <script src="../../js/random.js">
 
     </script>
   </body>
