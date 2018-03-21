@@ -17,7 +17,7 @@ var playerMove = false,
 var onChange = function(oldPos, newPos) {
   if(!taskFinished){
       if(playerMove){
-          $("#player").load('../ServerScripts/answer.php'); // loads answer
+          $("#player").load('ServerScripts/answer.php'); // loads answer
           setTimeout(function() { //timeouts prevents from empty innerHTMLs. Let the data load first :)
             //if correct move
               if(ChessBoard.objToFen(newPos) == document.getElementById("player").innerHTML){
@@ -30,7 +30,7 @@ var onChange = function(oldPos, newPos) {
                         taskFinished = true;
                     }
                     else{
-                          $("#move").load('../ServerScripts/computerMove.php');
+                          $("#move").load('ServerScripts/computerMove.php');
                           setTimeout(function() {
                             move = document.getElementById("move").innerHTML;
                             board.position(move);
@@ -92,7 +92,7 @@ var mins = 0,
           onChange: onChange
         };
         $("#MoveSwitcher").css("width", $("#board").css("width"));
-        $("#size").load('../ServerScripts/rowCount.php');
+        $("#size").load('ServerScripts/rowCount.php');
         nextTask();
 
     });
@@ -104,10 +104,10 @@ var mins = 0,
          taskFinished = false;
 
         $(".nextProb").css("pointer-events", "none");
-        $("#start").load('../ServerScripts/refreshSession.php');
-        $("#start").load('../ServerScripts/start.php');
-        $("#move").load('../ServerScripts/computerMove.php');
-        $("#additional").load('../ServerScripts/additional.php');
+        $("#size").load("ServerScripts/refreshSession.php");
+        $("#start").load('ServerScripts/start.php');
+        $("#move").load('ServerScripts/computerMove.php');
+        $("#additional").load('ServerScripts/additional.php');
           setTimeout(function(){
           startPosition = document.getElementById("start").innerHTML;
           move = document.getElementById("move").innerHTML;
@@ -141,8 +141,8 @@ var mins = 0,
       }
 
       function loadAnswers(){
-        $("#player").load('../ServerScripts/playerMovesAll.php');
-        $("#move").load('../ServerScripts/computerMovesAll.php');
+        $("#player").load('ServerScripts/playerMovesAll.php');
+        $("#move").load('ServerScripts/computerMovesAll.php');
         setTimeout(function(){
         positions = document.getElementById("player").innerHTML;
         moves = document.getElementById("move").innerHTML;
