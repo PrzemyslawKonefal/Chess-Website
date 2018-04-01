@@ -17,7 +17,7 @@ var playerMove = false,
 var onChange = function(oldPos, newPos) {
   if(!taskFinished){
       if(playerMove){
-          $("#player").load('../ServerScripts/answer.php'); // loads answer
+          $("#player").load('ServerScripts/answer.php'); // loads answer
           setTimeout(function() { //timeouts prevents from empty innerHTMLs. Let the data load first :)
             //if correct move
               if(ChessBoard.objToFen(newPos) == document.getElementById("player").innerHTML){
@@ -30,7 +30,7 @@ var onChange = function(oldPos, newPos) {
                         taskFinished = true;
                     }
                     else{
-                          $("#move").load('../ServerScripts/computerMove.php');
+                          $("#move").load('ServerScripts/computerMove.php');
                           setTimeout(function() {
                             move = document.getElementById("move").innerHTML;
                             board.position(move);
@@ -91,11 +91,10 @@ var mins = 0,
           onChange: onChange
         };
         $("#MoveSwitcher").css("width", $("#board").css("width"));
-        $("#size").load('../ServerScripts/rowCount.php');
+        $("#size").load('ServerScripts/rowCount.php');
         nextTask();
 
     });
-
   function nextTask(){
          moveCounter = 0;
          positions = '';
@@ -103,10 +102,10 @@ var mins = 0,
          taskFinished = false;
 
         $(".nextProb").css("pointer-events", "none");
-        $("#start").load('../ServerScripts/refreshSession.php');
-        $("#start").load('../ServerScripts/start.php');
-        $("#move").load('../ServerScripts/computerMove.php');
-        $("#additional").load('../ServerScripts/additional.php');
+        $("#size").load("ServerScripts/refreshSession.php");
+        $("#start").load('ServerScripts/start.php');
+        $("#move").load('ServerScripts/computerMove.php');
+        $("#additional").load('ServerScripts/additional.php');
           setTimeout(function(){
           startPosition = document.getElementById("start").innerHTML;
           move = document.getElementById("move").innerHTML;
@@ -140,8 +139,8 @@ var mins = 0,
       }
 
       function loadAnswers(){
-        $("#player").load('../ServerScripts/playerMovesAll.php');
-        $("#move").load('../ServerScripts/computerMovesAll.php');
+        $("#player").load('ServerScripts/playerMovesAll.php');
+        $("#move").load('ServerScripts/computerMovesAll.php');
         setTimeout(function(){
         positions = document.getElementById("player").innerHTML;
         moves = document.getElementById("move").innerHTML;
@@ -197,33 +196,32 @@ var mins = 0,
           });
 
           //see moves after task is done
-          function moveBackward() {
-            if (moveCounter >0){
-            if ((moveCounter) % 2) board.position(positions[Math.floor(moveCounter/2)], false)
-            else board.position(moves[(moveCounter/2)-1], false);
-            cfg.position = board.position();
-              moveCounter--;
-              }
+      function moveBackward() {
+        if (moveCounter >0){
+        if ((moveCounter) % 2) board.position(positions[Math.floor(moveCounter/2)], false)
+        else board.position(moves[(moveCounter/2)-1], false);
+        cfg.position = board.position();
+          moveCounter--;
           }
-          function moveForward() {
-            if (moveCounter+1 <= additional[3]*2){
-            if ((moveCounter) % 2) board.position(positions[Math.floor(moveCounter/2)+1], false);
-            else board.position(moves[(moveCounter/2)], false);
-            cfg.position = board.position();
-              moveCounter++;
-              }
+      }
+      function moveForward() {
+        if (moveCounter+1 <= additional[3]*2){
+        if ((moveCounter) % 2) board.position(positions[Math.floor(moveCounter/2)+1], false);
+        else board.position(moves[(moveCounter/2)], false);
+        cfg.position = board.position();
+          moveCounter++;
           }
-          document.addEventListener("keydown", function(event){
-            if(event.which === 39)moveForward();
-            else if(event.which === 37) moveBackward();
+      }
+      document.addEventListener("keydown", function(event){
+        if(event.which === 39)moveForward();
+        else if(event.which === 37) moveBackward();
+  });
+      $("#MoveForward").click(function(){
+        moveForward();
       });
-          $("#MoveForward").click(function(){
-            moveForward();
-          });
-          $("#MoveBackward").click(function(){
-            moveBackward();
-          });
-
+      $("#MoveBackward").click(function(){
+        moveBackward();
+      });
       //resize board on demand
       $(".resize").find("span").click(function(){
         var boardSize = $(this).html();

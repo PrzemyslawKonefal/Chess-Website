@@ -34,6 +34,7 @@ var onChange = function(oldPos, newPos) {
                           setTimeout(function() {
                             move = document.getElementById("move").innerHTML;
                             board.position(move);
+                            console.log(move);
                         }, 50);
                    }
               }
@@ -55,7 +56,6 @@ var onChange = function(oldPos, newPos) {
                     $(".next").css("background", "#76bf2c");
                     $(".rotate").css("background", "#76bf2c");
                     loadAnswers();
-                    $("#MoveSwitcher").slideDown();
                   }
             },50);
             playerMove = false;
@@ -90,11 +90,12 @@ var mins = 0,
           snapSpeed: 50,
           onChange: onChange
         };
-        $("#MoveSwitcher").css("width", $("#board").css("width"));
-        $("#size").load('../ServerScripts/rowCount.php');
         nextTask();
-
+        $("#hide-nav").click(function(){
+          $(".navbar").hide();
+        });
     });
+
 
   function nextTask(){
          moveCounter = 0;
@@ -102,8 +103,7 @@ var mins = 0,
          moves = '';
          taskFinished = false;
 
-        $(".nextProb").css("pointer-events", "none");
-        $("#start").load('../ServerScripts/refreshSession.php');
+        $("#start").load("../ServerScripts/refreshSession.php");
         $("#start").load('../ServerScripts/start.php');
         $("#move").load('../ServerScripts/computerMove.php');
         $("#additional").load('../ServerScripts/additional.php');
@@ -119,24 +119,25 @@ var mins = 0,
           board = ChessBoard('board', cfg);
           //updating info castle/color/moves
           additional = additional.split(" ");
-          if(additional[0] == 'w') {$("#who").css("background", "#fff"); board.orientation('white'); cfg.orientation = 'white'}
-          else {$("#who").css("background", "#000");board.orientation('black'); cfg.orientation = 'black'}
+          if(additional[0] == 'w') $("#who").css("background", "#fff");
+          else $("#who").css("background", "#000");
           $("#whiteCast").html(additional[1]);
           $("#blackCast").html(additional[2]);
-          // first move initiate, enable next task
+          // first move initiate
           setTimeout(function(){
+
              board.position(move);
-             $(".nextProb").css("pointer-events", "auto");
-           }, 300)
-          },1000);    // Whole second of waiting, its extremaly important for the server scripts to load first.
+
+            }, 200)
+          },450);
           $("#success").css("opacity", "0");
-          $(".next").css("background", "#d7b62b");
-          $(".rotate").css("background", "#d7b62b");
+          $(".next").css("background", "#00b4c6");
+          $(".rotate").css("background", "#00b4c6");
           document.getElementById("MoveForward").disabled = true;
           document.getElementById("MoveBackward").disabled = true;
           clearInterval(clock);
           setClock();
-          $("#MoveSwitcher").slideUp();
+
       }
 
       function loadAnswers(){
@@ -197,31 +198,21 @@ var mins = 0,
           });
 
           //see moves after task is done
-          function moveBackward() {
-            if (moveCounter >0){
-            if ((moveCounter) % 2) board.position(positions[Math.floor(moveCounter/2)], false)
-            else board.position(moves[(moveCounter/2)-1], false);
-            cfg.position = board.position();
-              moveCounter--;
-              }
-          }
-          function moveForward() {
+          $("#MoveForward").click(function(){
             if (moveCounter+1 <= additional[3]*2){
-            if ((moveCounter) % 2) board.position(positions[Math.floor(moveCounter/2)+1], false);
-            else board.position(moves[(moveCounter/2)], false);
+            if ((moveCounter) % 2) board.position(positions[Math.floor(moveCounter/2)+1]);
+            else board.position(moves[(moveCounter/2)]);
             cfg.position = board.position();
               moveCounter++;
               }
-          }
-          document.addEventListener("keydown", function(event){
-            if(event.which === 39)moveForward();
-            else if(event.which === 37) moveBackward();
-      });
-          $("#MoveForward").click(function(){
-            moveForward();
           });
           $("#MoveBackward").click(function(){
-            moveBackward();
+            if (moveCounter >0){
+            if ((moveCounter) % 2){ board.position(positions[Math.floor(moveCounter/2)])}
+            else board.position(moves[(moveCounter/2)-1]);
+            cfg.position = board.position();
+              moveCounter--;
+              }
           });
 
       //resize board on demand
@@ -233,14 +224,4 @@ var mins = 0,
         $("#MoveSwitcher").css("width", boardSize);
         var board1 = ChessBoard('board', cfg);
         $(window).resize(board1.resize);
-        board = ChessBoard('board', cfg);
-      });
-
-      //Resize board with window Resize
-      $(window).on('resize', function(){
-        var width = $("#board").css("width");
-        var board1 = ChessBoard('board', cfg);
-        $(window).resize(board1.resize);
-        $("#MoveSwitcher").css("width", $("#board").css("width"));
-        board = ChessBoard('board', cfg);
-      });
+      })
