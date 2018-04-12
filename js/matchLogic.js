@@ -141,6 +141,7 @@ $(document).ready(function(){
       var board1 = ChessBoard('board', cfg);
       $(window).resize(board1.resize);
       board = ChessBoard('board', cfg);
+      $(".match-data").css("max-height", $("#board").css("height")+115);
     });
 
     //Resize board with window Resize
@@ -151,4 +152,5 @@ $(document).ready(function(){
       $("#MoveSwitcher").css("width", $("#board").css("width"));
       board = ChessBoard('board', cfg);
     });
+    $(".match-data").css("max-height", $("#board").css("height")+115);
 });

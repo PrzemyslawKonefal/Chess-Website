@@ -1,3 +1,9 @@
+<?php session_start(); ?>
+<?php
+$_SESSION['ID'] = -1;
+$_SESSION['movesCounter'] = 0;
+$_SESSION['Table'] = "attack"
+ ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -10,13 +16,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/css.css">
     <link rel="stylesheet" href="../css/chessboard-0.3.0.min.css">
-    <?php
-    session_start();
-    $_SESSION['ID'] = -1;
-    $_SESSION['movesCounter'] = 0;
-    $_SESSION['Table'] = "attack"
-     ?>
-    <title>Checkmates in 1</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../img/title-icon.ico" />
+    <title>Attack</title>
   </head>
   <body>
     <nav class="navbar">
@@ -31,6 +32,7 @@
           </div>
       </div>
       <a href="../matches"> <i class="fas fa-chess-pawn nav-icon"></i> Matches</a>
+      <a href="../eyesight.php"><i class="fas fa-eye nav-icon"></i> Eyesight</a>
       <a href="../rules.php"><i class="fas fa-book nav-icon"></i> Game rules</a>
               <div class="dropdown">
                 <a href="../sign.php"><i class="fas fa-sign-in-alt nav-icon"></i> Sign in</a>
@@ -74,7 +76,7 @@
     </nav>
     <div class="grid">
         <div class="box">
-          <h2 style="text-align:center; color:#d7b62b; text-shadow: 2px 2px #000;">Daily Challenge!</h2>
+          <h2 style="text-align:center; color:#d7b62b; text-shadow: 2px 2px #000;">Create Advantage!</h2>
           <div id="board" style="width:60%"></div>
           <div id="MoveSwitcher"><h3>See the answer</h3> <div style="display:flex;"><button id="MoveBackward"><</button> <button id="MoveForward">></button></div>  </div>
         </div>

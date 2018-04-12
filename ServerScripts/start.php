@@ -1,5 +1,16 @@
+<?php session_start(); ?>
   <?php
-      session_start();
+      $_SESSION['movesCounter'] = 0;
+      $_SESSION['ID'] = mt_rand(0,$_SESSION["TableSize"]-1);
+
+      // do {
+      //   $repeated = false;
+      //   $_SESSION['ID'] = mt_rand(0,$_SESSION["TableSize"]-1);
+      //    for ($i=0; $i < sizeof($_SESSION['IdUsed']); $i++) {
+      //      if ($_SESSION['ID'] == $_SESSION['IdUsed'].[$i]) {$repeated = true; break;}
+      //    }
+      // } while ($repeated);
+      //  array_push($_SESSION['IdUsed'],$_SESSION['ID']);
       require_once"connect.php";
 
       $connection = @new mysqli($host, $db_user, $db_password, $db_name);

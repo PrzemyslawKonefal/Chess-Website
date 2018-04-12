@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/css.css">
+    <link rel="shortcut icon" type="image/x-icon" href="../img/title-icon.ico" />
     <title></title>
 
   </head>
@@ -25,6 +26,7 @@
           </div>
       </div>
       <a href="./"> <i class="fas fa-chess-pawn nav-icon"></i> Matches</a>
+      <a href="../eyesight.php"><i class="fas fa-eye nav-icon"></i> Eyesight</a>
       <a href="../rules.php"><i class="fas fa-book nav-icon"></i> Game rules</a>
               <div class="dropdown">
                 <a href="../sign.php"><i class="fas fa-sign-in-alt nav-icon"></i> Sign in</a>
@@ -101,5 +103,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.js"></script>
+    <script src="../js/navLogic.js"></script>
   </body>
 </html>

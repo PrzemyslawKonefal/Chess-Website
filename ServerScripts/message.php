@@ -1,12 +1,12 @@
+<?php session_start(); ?>
 <?php
-session_start();
-
-$to      = 'webmaster@example.com';
+$to      = 'smeagol65@gmail.com';
 $subject = 'ChessYes contact';
 $message = $_POST['message'];
 $headers = 'From: ' .$_POST['email']. "\r\n";
 
-mail($to, $subject, $message, $headers);
+if(mail($to, $subject, $message, $headers)){
 $_SESSION['MailSent'] = true;
 header('Location: ../contact.php');
+}
 ?>

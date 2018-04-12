@@ -1,3 +1,5 @@
+$(document).ready(function(){
+
 var playerMove = false,
     positions,
     moves,
@@ -17,8 +19,7 @@ var playerMove = false,
 var onChange = function(oldPos, newPos) {
   if(!taskFinished){
       if(playerMove){
-          $("#player").load('ServerScripts/answer.php'); // loads answer
-          setTimeout(function() { //timeouts prevents from empty innerHTMLs. Let the data load first :)
+          $("#player").load('ServerScripts/answer.php', function(){ // loads answer
             //if correct move
               if(ChessBoard.objToFen(newPos) == document.getElementById("player").innerHTML){
                     cfg.position = ChessBoard.objToFen(newPos);
@@ -30,11 +31,10 @@ var onChange = function(oldPos, newPos) {
                         taskFinished = true;
                     }
                     else{
-                          $("#move").load('ServerScripts/computerMove.php');
-                          setTimeout(function() {
+                          $("#move").load('ServerScripts/computerMove.php', function(){
                             move = document.getElementById("move").innerHTML;
                             board.position(move);
-                        }, 50);
+                        });
                    }
               }
               //incorrect move
@@ -57,7 +57,7 @@ var onChange = function(oldPos, newPos) {
                     loadAnswers();
                     $("#MoveSwitcher").slideDown();
                   }
-            },50);
+            });
             playerMove = false;
           }
       else {
@@ -79,77 +79,66 @@ var mins = 0,
       else $("#sec").html(secs);
     }, 1000)
 }
-    //load position
 
-    $(document).ready(function(){
-    cfg = {
-          draggable: true,
-          position: startPosition,
-          moveSpeed: 'slow',
-          showNotation: false,
-          snapSpeed: 50,
-          onChange: onChange
-        };
-        $("#MoveSwitcher").css("width", $("#board").css("width"));
-        $("#size").load('ServerScripts/rowCount.php');
-        nextTask();
-
-    });
   function nextTask(){
          moveCounter = 0;
          positions = '';
          moves = '';
          taskFinished = false;
 
-        $(".nextProb").css("pointer-events", "none");
-        $("#size").load("ServerScripts/refreshSession.php");
-        $("#start").load('ServerScripts/start.php');
-        $("#move").load('ServerScripts/computerMove.php');
-        $("#additional").load('ServerScripts/additional.php');
-          setTimeout(function(){
-          startPosition = document.getElementById("start").innerHTML;
-          move = document.getElementById("move").innerHTML;
-          additional = document.getElementById("additional").innerHTML;
-          startPosition = startPosition.trim(); //removes spaces before and after
-          additional = additional.trim();
-          //setting position
-          cfg.position = startPosition;
-          cfg.draggable = true;
-          board = ChessBoard('board', cfg);
-          //updating info castle/color/moves
-          additional = additional.split(" ");
-          if(additional[0] == 'w') {$("#who").css("background", "#fff"); board.orientation('white'); cfg.orientation = 'white'}
-          else {$("#who").css("background", "#000");board.orientation('black'); cfg.orientation = 'black'}
-          $("#whiteCast").html(additional[1]);
-          $("#blackCast").html(additional[2]);
-          // first move initiate, enable next task
-          setTimeout(function(){
-             board.position(move);
-             $(".nextProb").css("pointer-events", "auto");
-           }, 300)
-          },1000);    // Whole second of waiting, its extremaly important for the server scripts to load first.
-          $("#success").css("opacity", "0");
-          $(".next").css("background", "#d7b62b");
-          $(".rotate").css("background", "#d7b62b");
-          document.getElementById("MoveForward").disabled = true;
-          document.getElementById("MoveBackward").disabled = true;
-          clearInterval(clock);
-          setClock();
-          $("#MoveSwitcher").slideUp();
+
+          $("#start").load('ServerScripts/start.php', function(){
+            $("#move").load('ServerScripts/computerMove.php', function(){
+              $("#additional").load('ServerScripts/additional.php', function(){
+
+                startPosition = document.getElementById("start").innerHTML;
+                move = document.getElementById("move").innerHTML;
+                additional = document.getElementById("additional").innerHTML;
+                startPosition = startPosition.trim(); //removes spaces before and after
+                additional = additional.trim();
+                //setting position
+                cfg.position = startPosition;
+                cfg.draggable = true;
+                board = ChessBoard('board', cfg);
+                //updating info castle/color/moves
+                additional = additional.split(" ");
+                if(additional[0] == 'w') {$("#who").css("background", "#fff"); board.orientation('white'); cfg.orientation = 'white'}
+                else {$("#who").css("background", "#000");board.orientation('black'); cfg.orientation = 'black'}
+                $("#whiteCast").html(additional[1]);
+                $("#blackCast").html(additional[2]);
+                // first move initiate, enable next task
+                setTimeout(function(){
+                   board.position(move);
+                   $(".nextProb").css("pointer-events", "auto");
+                 }, 300)
+                  // Whole second of waiting, its extremaly important for the server scripts to load first.
+                $(".nextProb").css("pointer-events", "none");
+                $("#success").css("opacity", "0");
+                $(".next").css("background", "#d7b62b");
+                $(".rotate").css("background", "#d7b62b");
+                document.getElementById("MoveForward").disabled = true;
+                document.getElementById("MoveBackward").disabled = true;
+                clearInterval(clock);
+                setClock();
+                $("#MoveSwitcher").slideUp();
+
+                });
+              });
+            });
       }
 
       function loadAnswers(){
-        $("#player").load('ServerScripts/playerMovesAll.php');
-        $("#move").load('ServerScripts/computerMovesAll.php');
-        setTimeout(function(){
-        positions = document.getElementById("player").innerHTML;
-        moves = document.getElementById("move").innerHTML;
-        positions = positions.split(" ");
-        positions.unshift(startPosition);
-        moves = moves.split(" ");
-        },200);
-        document.getElementById("MoveForward").disabled = false;
-        document.getElementById("MoveBackward").disabled = false;
+        $("#player").load('ServerScripts/playerMovesAll.php', function(){
+            $("#move").load('ServerScripts/computerMovesAll.php', function(){
+            positions = document.getElementById("player").innerHTML;
+            moves = document.getElementById("move").innerHTML;
+            positions = positions.split(" ");
+            positions.unshift(startPosition);
+            moves = moves.split(" ");
+            document.getElementById("MoveForward").disabled = false;
+            document.getElementById("MoveBackward").disabled = false;
+          });
+        });
       }
 
       //show tip
@@ -242,3 +231,19 @@ var mins = 0,
         $("#MoveSwitcher").css("width", $("#board").css("width"));
         board = ChessBoard('board', cfg);
       });
+
+      //execute when document is ready
+      cfg = {
+            draggable: true,
+            position: startPosition,
+            moveSpeed: 'fast',
+            showNotation: false,
+            snapSpeed: 50,
+            onChange: onChange
+          };
+          $("#MoveSwitcher").css("width", $("#board").css("width"));
+          $("#size").load('ServerScripts/rowCount.php', function(){
+          nextTask();
+          });
+
+});

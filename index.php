@@ -1,3 +1,9 @@
+<?php
+session_start();
+$_SESSION['ID'] = -1;
+$_SESSION['movesCounter'] = 0;
+$_SESSION['Table'] = "checkmates2";
+ ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -9,13 +15,16 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <link rel="stylesheet" href="css/css.css">
     <link rel="stylesheet" href="css/chessboard-0.3.0.min.css">
+    <style media="screen">
+      @media only screen and (max-width: 540px){
+        .main > *{
+          margin: 0;
+          width: 100%;
+        }
+      }
+    </style>
+    <link rel="shortcut icon" type="image/x-icon" href="img/title-icon.ico" />
     <title>Chessyes.eu</title>
-    <?php
-    session_start();
-    $_SESSION['ID'] = -1;
-    $_SESSION['movesCounter'] = 0;
-    $_SESSION['Table'] = "attack";
-     ?>
   </head>
   <body>
 
@@ -75,8 +84,8 @@
     </nav>
     <div class="grid">
         <div class="box">
-          <h2 style="text-align:center; color:#d7b62b; text-shadow: 2px 2px #000;">Daily Challenge!</h2>
-          <div id="board" style="width:60%"></div>
+          <h2 style="text-align:center; color:#d7b62b; text-shadow: 2px 2px #000;">Daily Challenge! Checkmate in 2</h2>
+          <div id="board"></div>
           <div id="MoveSwitcher"><h3>See the answer</h3> <div style="display:flex;"><button id="MoveBackward"><</button> <button id="MoveForward">></button></div>  </div>
         </div>
         <div class="info-right">
@@ -101,8 +110,8 @@
         </div>
 
     </div>
-    <div class="main" style="margin-top: 15px;">
-        <h2 style="background:linear-gradient(#d7b62b, #d4ab00); text-align: center; margin:0; padding: 30px; font-size: 2.5em; color: #fff; width: 80%; margin: auto; border: 1px solid #000; border-bottom: none; border-radius: 10px 10px 0 0">More combinations</h2>
+    <div class="main" style="margin-top: 80px;">
+        <h2 class="more-combinations">More combinations</h2>
         <div class="combinations">
           <div class="section">
             <h2><a href="beginner">Beginner</a></h2>
@@ -122,7 +131,7 @@
             <h2><a href="expert">Expert</a></h2>
               <div class="section-main">
                 <a href="expert/attack.php" class="section-category"><div class="filter"><h5>Attack <br> strategy </h5></div></a>
-                <a href="expert/defense.php" class="section-category"><div class="filter"><h5>Defence <br> strategy </h5></div></a>
+                <a href="expert/defense.php" class="section-category"><div class="filter"><h5>Defense <br> strategy </h5></div></a>
               </div>
           </div>
         </div>

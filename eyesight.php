@@ -9,6 +9,15 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <link rel="stylesheet" href="css/css.css">
     <link rel="stylesheet" href="css/chessboard-0.3.0.min.css">
+    <style media="screen">
+      .box{
+        grid-column: 1/3;
+      }
+      #board{
+        max-width: 800px;
+      }
+    </style>
+    <link rel="shortcut icon" type="image/x-icon" href="img/title-icon.ico" />
     <title>Eyesight training</title>
   </head>
   <body>
@@ -70,20 +79,20 @@
     <div class="grid">
         <div class="box">
           <h2 style="text-align:center; color:#d7b62b; text-shadow: 2px 2px #000;">Train you eyesight on board!</h2>
-          <p>This excercise ought to improve your seeing on the board. On a board appear notations of a certain squares. Click pointed squares as soon as possible. The more you click in 30 seconds, the better. Let's go!</p>
-          <div style="position:relative;"> <div id="board"></div></div>
-        </div>
-        <div class="info-display">
-          <p id = "square-num"></p>
-            <div class="time-manager">
-              <h3>Time left</h3>
-              <p><span id = "time-left"></span>sec</p>
-            </div>
-            <button type="button" class="eyesight-start">Start</button>
+          <p>This excercise ought to improve your seeing on the board. Over the board appear notations of a certain squares. Click pointed squares as soon as possible. The more you click in 30 seconds, the better. It is recommended to adjust the board size before you start(see navigation bar). Now - click big, shiny, green button under the board and let's go!</p>
+          <div style="position:relative; text-align: center;">  <h2 id = "square-num"></h2> <div id="board"></div><button type="button" class="eyesight-start">Start</button><div class="time-manager">
+
+
+          </div></div>
         </div>
     </div>
+    <div class="time-counter">
+      <h3 style="color: #fff;">Time left</h3>
+      <p><span id = "time-left"></span> sec</p>
+    </div>
+    <i class="fas fa-volume-up" id = "mute"></i>
 
-
+    <audio id="is-correct"></audio>
     <script src="https://code.jquery.com/jquery-3.3.1.js"integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
@@ -95,11 +104,12 @@
               showNotation: true
             },
       timeCount,
+      tryDone,
       board = ChessBoard('board', cfg);
       $(".eyesight-start").click(function(){
-        startGame();
+        newGame();
       })
-      function startGame(){
+      function newGame(){
                   var gameStarted = true,
                       attempts = 0,
                       points = 0,
@@ -107,13 +117,14 @@
                       randomNotation;
 
                       newSquare();
+                      clearTimeout(tryDone);
                       clearInterval(timeCount);
                       $("#time-left").html("30");
                       timeCount = setInterval(function(){
                         time--;
                         $("#time-left").html(time);
                       }, 1000);
-                      setTimeout(function(){
+                     tryDone = setTimeout(function(){
                             $("#square-num").html(points + "/" + attempts);
                             clearInterval(timeCount);
                             gameStarted = false;
@@ -143,7 +154,8 @@
                   $("#board").on("click", ".square-55d63", function(){
                       if(gameStarted){
                               var squareClass = "square-"+ randomNotation;
-                              if($(this).hasClass(squareClass)) points++;
+                              if($(this).hasClass(squareClass)) {points++; isCorrectSound(true);}
+                              else{isCorrectSound(false);}
                               attempts++;
                               newSquare();
                             }
@@ -171,7 +183,19 @@
           $("#MoveSwitcher").css("width", $("#board").css("width"));
           board = ChessBoard('board', cfg);
         });
-
+      function isCorrectSound(correctBoolean){
+        var sound = document.getElementById('is-correct');
+        if(correctBoolean){sound.setAttribute('src', 'audio/correct.mp3' );}
+        else {sound.setAttribute('src','audio/incorrect.wav' );}
+        sound.play();
+      }
+      $("body").on('click', '#mute', function(){
+        $("#mute").toggleClass("fa-volume-off");
+        $("#mute").toggleClass("fa-volume-up");
+        var sound = document.getElementById('is-correct');
+        if($("#mute").hasClass("fa-volume-off")) sound.volume = 0;
+        else sound.volume = 1;
+      });
     </script>
   </body>
 </html>

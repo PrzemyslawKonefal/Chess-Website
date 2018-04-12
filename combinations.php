@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <link rel="stylesheet" href="css/css.css">
     <link rel="stylesheet" href="css/chessboard-0.3.0.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="img/title-icon.ico" />
     <title>Chess Combinations</title>
   </head>
   <body>

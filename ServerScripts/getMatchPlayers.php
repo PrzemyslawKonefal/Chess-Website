@@ -1,5 +1,5 @@
+<?php session_start(); ?>
 <?php
-    session_start();
     require_once"connect.php";
 
     $connection = @new mysqli($host, $db_user, $db_password, $db_name);
@@ -7,7 +7,16 @@
         echo "Error: ".$connection->connect_errno;
       }
       else{
+        if (isset($_SESSION['Filter'])) {
+            if ($_SESSION['matchNumber']< sizeof($_SESSION['IDsArray'])) {
+            $_SESSION['ID'] = $_SESSION['IDsArray'][$_SESSION['matchNumber']];
+            $_SESSION['matchNumber']++;
+            }
+            else{$_SESSION['ID']= -1;}
+        }
+        else{
         $_SESSION['ID'] ++;
+        }
         $result = $connection->query("SELECT Players FROM {$_SESSION['Table']} WHERE ID = {$_SESSION['ID']}");
         if ($result ->num_rows >0) {
           while ($row = $result->fetch_assoc()) {
