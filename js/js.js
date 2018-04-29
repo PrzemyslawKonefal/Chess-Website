@@ -18,7 +18,7 @@ var playerMove = false,
 var onChange = function(oldPos, newPos) {
   if(!taskFinished){
       if(playerMove){
-          $("#player").load('../ServerScripts/answer.php', function(){ // loads answer
+          $("#player").load(`${pathToMainFolder}ServerScripts/answer.php`, function(){ // loads answer
             //if correct move
               if(ChessBoard.objToFen(newPos) == document.getElementById("player").innerHTML){
                     cfg.position = ChessBoard.objToFen(newPos);
@@ -30,7 +30,7 @@ var onChange = function(oldPos, newPos) {
                         taskFinished = true;
                     }
                     else{
-                          $("#move").load('../ServerScripts/computerMove.php', function(){
+                          $("#move").load(`${pathToMainFolder}ServerScripts/computerMove.php`, function(){
                             move = document.getElementById("move").innerHTML;
                             board.position(move);
                         });
@@ -86,10 +86,9 @@ var mins = 0,
          moves = '';
          taskFinished = false;
 
-
-          $("#start").load('../ServerScripts/start.php', function(){
-            $("#move").load('../ServerScripts/computerMove.php', function(){
-              $("#additional").load('../ServerScripts/additional.php', function(){
+          $("#start").load(`${pathToMainFolder}ServerScripts/start.php`, function(){
+            $("#move").load(`${pathToMainFolder}ServerScripts/computerMove.php`, function(){
+              $("#additional").load(`${pathToMainFolder}ServerScripts/additional.php`, function(){
 
                 startPosition = document.getElementById("start").innerHTML;
                 move = document.getElementById("move").innerHTML;
@@ -111,7 +110,6 @@ var mins = 0,
                    board.position(move);
                    $(".nextProb").css("pointer-events", "auto");
                  }, 300)
-                  // Whole second of waiting, its extremaly important for the server scripts to load first.
                 $(".nextProb").css("pointer-events", "none");
                 $("#success").css("opacity", "0");
                 $(".next").css("background", "#d7b62b");
@@ -128,8 +126,8 @@ var mins = 0,
       }
 
       function loadAnswers(){
-        $("#player").load('../ServerScripts/playerMovesAll.php', function(){
-            $("#move").load('../ServerScripts/computerMovesAll.php', function(){
+        $("#player").load(`${pathToMainFolder}ServerScripts/playerMovesAll.php`, function(){
+            $("#move").load(`${pathToMainFolder}ServerScripts/computerMovesAll.php`, function(){
             positions = document.getElementById("player").innerHTML;
             moves = document.getElementById("move").innerHTML;
             positions = positions.split(" ");
@@ -141,23 +139,7 @@ var mins = 0,
         });
       }
 
-      //show tip
-
-      $("#tip").click(function(){
-        var visible = $(".drop").css("opacity");
-        if(visible=="0"){
-        $(".drop").css("opacity","1");
-        $(".drop").css("height","150px");
-        $("#sign").css("transform", "rotate(270deg)");
-      }
-        else{
-          $(".drop").css("opacity","0");
-          $(".drop").css("height","0px");
-          $("#sign").css("transform", "rotate(90deg)");
-        }
-        });
-
-        //Next Task
+        //Next Task click
 
         $(".next").click(function(){
           if($(".next").css("background-color")!= "rgb(118, 191, 44)"){
@@ -233,6 +215,14 @@ var mins = 0,
       });
 
       //execute when document is ready
+
+      if (typeof path === 'undefined') {
+          var pathToMainFolder = '../';
+      }
+      else{
+          var pathToMainFolder = path;
+      }
+
       cfg = {
             draggable: true,
             position: startPosition,
@@ -241,8 +231,9 @@ var mins = 0,
             snapSpeed: 150,
             onChange: onChange
           };
+
           $("#MoveSwitcher").css("width", $("#board").css("width"));
-          $("#size").load('../ServerScripts/rowCount.php', function(){
+          $("#size").load(`${pathToMainFolder}ServerScripts/rowCount.php`, function(){
           nextTask();
           });
 
