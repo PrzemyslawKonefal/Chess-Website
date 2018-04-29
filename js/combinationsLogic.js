@@ -16,9 +16,29 @@ var playerMove = false,
 var onChange = function(oldPos, newPos) {
   if(!taskFinished){
       if(playerMove){
+<<<<<<< HEAD:js/combinationsLogic.js
           $("#player").load(`${pathToMainFolder}ServerScripts/answer.php`, function(){
               if(ChessBoard.objToFen(newPos) == document.getElementById("player").innerHTML){
                     onCorrectMove(newPos);
+=======
+          $("#player").load(`${pathToMainFolder}ServerScripts/answer.php`, function(){ // loads answer
+            //if correct move
+              if(ChessBoard.objToFen(newPos) == document.getElementById("player").innerHTML){
+                    cfg.position = ChessBoard.objToFen(newPos);
+                    moveCounter++;
+                    if(moveCounter/2 == additional[3]){ //double equal sign - additional[3] is a string
+                        $("#success").css("border-color","#76bf2c");
+                        $("#success").html("Success");
+                        score++;
+                        taskFinished = true;
+                    }
+                    else{
+                          $("#move").load(`${pathToMainFolder}ServerScripts/computerMove.php`, function(){
+                            move = document.getElementById("move").innerHTML;
+                            board.position(move);
+                        });
+                   }
+>>>>>>> 85bdd2b8fa80536443035734bd97dd1645b8d730:js/js.js
               }
               else{
                     onIncorrectMove();
@@ -89,11 +109,29 @@ let mins = 0,
  }
 
   function nextTask(){
+<<<<<<< HEAD:js/combinationsLogic.js
           $("#start").load(`${pathToMainFolder}ServerScripts/start.php`, function(){
             $("#move").load(`${pathToMainFolder}ServerScripts/computerMove.php`, function(){
               $("#additional").load(`${pathToMainFolder}ServerScripts/additional.php`, function(){
                 catchDataForNewTask();
                 refreshInterface();
+=======
+         moveCounter = 0;
+         positions = '';
+         moves = '';
+         taskFinished = false;
+
+          $("#start").load(`${pathToMainFolder}ServerScripts/start.php`, function(){
+            $("#move").load(`${pathToMainFolder}ServerScripts/computerMove.php`, function(){
+              $("#additional").load(`${pathToMainFolder}ServerScripts/additional.php`, function(){
+
+                startPosition = document.getElementById("start").innerHTML;
+                move = document.getElementById("move").innerHTML;
+                additional = document.getElementById("additional").innerHTML;
+                startPosition = startPosition.trim(); //removes spaces before and after
+                additional = additional.trim();
+                //setting position
+>>>>>>> 85bdd2b8fa80536443035734bd97dd1645b8d730:js/js.js
                 cfg.position = startPosition;
                 cfg.draggable = true;
                 if(additional[0] == 'w') {$("#who").css("background", "#fff"); cfg.orientation = 'white'}
@@ -102,7 +140,21 @@ let mins = 0,
                 setTimeout(function(){
                    board.position(move);
                    $(".nextProb").css("pointer-events", "auto");
+<<<<<<< HEAD:js/combinationsLogic.js
                  }, 500)
+=======
+                 }, 300)
+                $(".nextProb").css("pointer-events", "none");
+                $("#success").css("opacity", "0");
+                $(".next").css("background", "#d7b62b");
+                $(".rotate").css("background", "#d7b62b");
+                document.getElementById("MoveForward").disabled = true;
+                document.getElementById("MoveBackward").disabled = true;
+                clearInterval(clock);
+                setClock();
+                $("#MoveSwitcher").slideUp();
+
+>>>>>>> 85bdd2b8fa80536443035734bd97dd1645b8d730:js/js.js
                 });
               });
             });
