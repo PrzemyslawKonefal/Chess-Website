@@ -13,61 +13,32 @@ var playerMove = false,
     score=0,
     attempts=0;
 
-// on board change
-
 var onChange = function(oldPos, newPos) {
   if(!taskFinished){
       if(playerMove){
-          $("#player").load('../ServerScripts/answer.php', function(){ // loads answer
-            //if correct move
+          $("#player").load(`${pathToMainFolder}ServerScripts/answer.php`, function(){
               if(ChessBoard.objToFen(newPos) == document.getElementById("player").innerHTML){
-                    cfg.position = ChessBoard.objToFen(newPos);
-                    moveCounter++;
-                    if(moveCounter/2 == additional[3]){ //double equal sign - additional[3] is a string
-                        $("#success").css("border-color","#76bf2c");
-                        $("#success").html("Success");
-                        score++;
-                        taskFinished = true;
-                    }
-                    else{
-                          $("#move").load('../ServerScripts/computerMove.php', function(){
-                            move = document.getElementById("move").innerHTML;
-                            board.position(move);
-                        });
-                   }
+                    onCorrectMove(newPos);
               }
-              //incorrect move
               else{
-                    $("#success").html("<span style = 'color:red'>Wrong!</span>")
-                    $("#success").css("border-color","red");
-                    board = ChessBoard('board', cfg);
-                    taskFinished = true;
+                    onIncorrectMove();
               }
-                if(taskFinished){
-                    cfg.draggable = false;
-                    clearInterval(clock);
-                    attempts++;
-                    $("#success").css("opacity", "1");
-                    $("#score").html(score);
-                    $("#attempts").html(attempts);
-                    $("#correct").html(Math.round(((score/attempts) *100) * 100) / 100);
-                    $(".next").css("background", "#76bf2c");
-                    $(".rotate").css("background", "#76bf2c");
-                    loadAnswers();
-                    $("#MoveSwitcher").slideDown();
-                  }
-            });
+              if(taskFinished){
+                updateData();
+                }
+                });
             playerMove = false;
           }
       else {
         playerMove = true;
          cfg.position = ChessBoard.objToFen(newPos);
-         moveCounter++;}
+         moveCounter++;
+       }
   }
 };
-//Clock
+
 function setClock(){
-var mins = 0,
+let mins = 0,
     secs = 0;
     clock = setInterval(function(){
       secs++;
@@ -78,58 +49,96 @@ var mins = 0,
       else $("#sec").html(secs);
     }, 1000)
 }
-    //load position
+
+ function onCorrectMove(newPosition){
+   cfg.position = ChessBoard.objToFen(newPosition);
+   moveCounter++;
+   if(moveCounter/2 == additional[3]){ //check if this is the end of the task
+       $("#success").css("border-color","#76bf2c");
+       $("#success").html("Success");
+       score++;
+       taskFinished = true;
+   }
+   else{
+         $("#move").load(`${pathToMainFolder}ServerScripts/computerMove.php`, function(){
+           move = document.getElementById("move").innerHTML;
+           board.position(move);
+       });
+   }
+ }
+
+ function onIncorrectMove(){
+   $("#success").html("<span style = 'color:red'>Wrong!</span>")
+   $("#success").css("border-color","red");
+   board = ChessBoard('board', cfg);
+   taskFinished = true;
+ }
+
+ function updateData(){
+   cfg.draggable = false;
+   clearInterval(clock);
+   attempts++;
+   $("#success").css("opacity", "1");
+   $("#score").html(score);
+   $("#attempts").html(attempts);
+   $("#correct").html(Math.round(((score/attempts) *100) * 100) / 100);
+   $(".next").css("background", "#76bf2c");
+   $(".rotate").css("background", "#76bf2c");
+   loadAnswers();
+   $("#MoveSwitcher").slideDown();
+ }
 
   function nextTask(){
-         moveCounter = 0;
-         positions = '';
-         moves = '';
-         taskFinished = false;
-
-
-          $("#start").load('../ServerScripts/start.php', function(){
-            $("#move").load('../ServerScripts/computerMove.php', function(){
-              $("#additional").load('../ServerScripts/additional.php', function(){
-
-                startPosition = document.getElementById("start").innerHTML;
-                move = document.getElementById("move").innerHTML;
-                additional = document.getElementById("additional").innerHTML;
-                startPosition = startPosition.trim(); //removes spaces before and after
-                additional = additional.trim();
-                //setting position
+          $("#start").load(`${pathToMainFolder}ServerScripts/start.php`, function(){
+            $("#move").load(`${pathToMainFolder}ServerScripts/computerMove.php`, function(){
+              $("#additional").load(`${pathToMainFolder}ServerScripts/additional.php`, function(){
+                catchDataForNewTask();
+                refreshInterface();
                 cfg.position = startPosition;
                 cfg.draggable = true;
+                if(additional[0] == 'w') {$("#who").css("background", "#fff"); cfg.orientation = 'white'}
+                else {$("#who").css("background", "#000"); cfg.orientation = 'black'}
                 board = ChessBoard('board', cfg);
-                //updating info castle/color/moves
-                additional = additional.split(" ");
-                if(additional[0] == 'w') {$("#who").css("background", "#fff"); board.orientation('white'); cfg.orientation = 'white'}
-                else {$("#who").css("background", "#000");board.orientation('black'); cfg.orientation = 'black'}
-                $("#whiteCast").html(additional[1]);
-                $("#blackCast").html(additional[2]);
-                // first move initiate, enable next task
                 setTimeout(function(){
                    board.position(move);
                    $(".nextProb").css("pointer-events", "auto");
-                 }, 300)
-                  // Whole second of waiting, its extremaly important for the server scripts to load first.
-                $(".nextProb").css("pointer-events", "none");
-                $("#success").css("opacity", "0");
-                $(".next").css("background", "#d7b62b");
-                $(".rotate").css("background", "#d7b62b");
-                document.getElementById("MoveForward").disabled = true;
-                document.getElementById("MoveBackward").disabled = true;
-                clearInterval(clock);
-                setClock();
-                $("#MoveSwitcher").slideUp();
-
+                 }, 500)
                 });
               });
             });
       }
 
+      function catchDataForNewTask(){
+        startPosition = document.getElementById("start").innerHTML;
+        move = document.getElementById("move").innerHTML;
+        additional = document.getElementById("additional").innerHTML;
+        startPosition = startPosition.trim();
+        move = move.trim();
+        additional = additional.trim();
+        additional = additional.split(" ");
+        moveCounter = 0;
+        positions = '';
+        moves = '';
+        taskFinished = false;
+      }
+
+      function refreshInterface(){
+        $(".nextProb").css("pointer-events", "none");
+        $("#success").css("opacity", "0");
+        $(".next").css("background", "#d7b62b");
+        $(".rotate").css("background", "#d7b62b");
+        $("#whiteCast").html(additional[1]);
+        $("#blackCast").html(additional[2]);
+        document.getElementById("MoveForward").disabled = true;
+        document.getElementById("MoveBackward").disabled = true;
+        clearInterval(clock);
+        setClock();
+        $("#MoveSwitcher").slideUp();
+      }
+
       function loadAnswers(){
-        $("#player").load('../ServerScripts/playerMovesAll.php', function(){
-            $("#move").load('../ServerScripts/computerMovesAll.php', function(){
+        $("#player").load(`${pathToMainFolder}ServerScripts/playerMovesAll.php`, function(){
+            $("#move").load(`${pathToMainFolder}ServerScripts/computerMovesAll.php`, function(){
             positions = document.getElementById("player").innerHTML;
             moves = document.getElementById("move").innerHTML;
             positions = positions.split(" ");
@@ -141,23 +150,7 @@ var mins = 0,
         });
       }
 
-      //show tip
-
-      $("#tip").click(function(){
-        var visible = $(".drop").css("opacity");
-        if(visible=="0"){
-        $(".drop").css("opacity","1");
-        $(".drop").css("height","150px");
-        $("#sign").css("transform", "rotate(270deg)");
-      }
-        else{
-          $(".drop").css("opacity","0");
-          $(".drop").css("height","0px");
-          $("#sign").css("transform", "rotate(90deg)");
-        }
-        });
-
-        //Next Task
+        //Next Task click
 
         $(".next").click(function(){
           if($(".next").css("background-color")!= "rgb(118, 191, 44)"){
@@ -223,7 +216,7 @@ var mins = 0,
         board = ChessBoard('board', cfg);
       });
 
-      //Resize board with window Resize
+      //Resize board with window resize
       $(window).on('resize', function(){
         var width = $("#board").css("width");
         var board1 = ChessBoard('board', cfg);
@@ -233,6 +226,14 @@ var mins = 0,
       });
 
       //execute when document is ready
+
+      if (typeof path === 'undefined') {
+          var pathToMainFolder = '../';
+      }
+      else{
+          var pathToMainFolder = path;
+      }
+
       cfg = {
             draggable: true,
             position: startPosition,
@@ -241,8 +242,9 @@ var mins = 0,
             snapSpeed: 150,
             onChange: onChange
           };
+
           $("#MoveSwitcher").css("width", $("#board").css("width"));
-          $("#size").load('../ServerScripts/rowCount.php', function(){
+          $("#size").load(`${pathToMainFolder}ServerScripts/rowCount.php`, function(){
           nextTask();
           });
 
