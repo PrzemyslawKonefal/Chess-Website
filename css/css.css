@@ -837,6 +837,75 @@ data{
   border: 1px solid #d7b62b;
   font-size: 1.3em;
 }
+#login-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.logging-box{
+  width: 550px;
+  background: #d4d4d6;
+  height: 500px;
+  margin: 10px 30px;
+  padding: 20px 0;
+  transition: .3s ease;
+}
+.logging-box:hover{
+  box-shadow: 0 0 40px #000;
+}
+.logging-box p, .logging-box a{
+  text-align: center;
+}
+.logging-box a{
+  display: block;
+  margin-top: 10px;
+}
+.logging-box input{
+  display: block;
+  width: calc(100% - 30px);
+  height: 20px;
+  margin: 5px auto;
+  padding: 15px;
+  outline-color: #d7b62b;
+}
+.logging-box button{
+  display: block;
+  background: #d7b62b;
+  width: 100px;
+  height: 20px;
+  padding: 10px 30px;
+  box-sizing: content-box;
+  border: none;
+  cursor: pointer;
+  margin: auto;
+  transition: .3s ease;
+  margin-top: 50px;
+}
+#rules{
+  position: relative;
+  width: 20px;
+  display: inline-block;
+  margin-left: 15px;
+  box-sizing: content-box;
+  top: 2px;
+}
+.logging-box button:hover{
+  background: #c4a729;
+}
+.logging-box:hover .sign-icon{
+  transform: scale(1.3, 1.3);
+}
+.logging-box .title{
+  text-align: center;
+  border-bottom: 5px solid #312e2b;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+.sign-icon{
+  font-size: 2.5em;
+  transition: .3s ease;
+  color: #d7b62b;
+}
 @media only screen and (max-width: 1400px){
   .section{
     width: 90%;
@@ -894,6 +963,9 @@ data{
           .time-counter h3{
             font-size: 1.2em;
           }
+          #login-container{
+            flex-direction: column;
+          }
 }
 @media only screen and (max-width: 600px){
   .category-anchors{
@@ -904,6 +976,9 @@ data{
     width: 100%;
     margin: 0;
     min-height: 70px;
+  }
+  .logging-box{
+    width: 95%;
   }
 }
 @media only screen and (max-width: 400px){

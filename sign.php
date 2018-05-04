@@ -70,14 +70,37 @@
                 <a href="contact.php"><i class="fas fa-envelope nav-icon"></i> Contact</a>
     </nav>
 
-	<div class = "main">
-		<h1 style = "color:#fff; text-align: center;">Sorry, Page does not exist :(</h1>
+	<div class = "main" id="login-container">
+		<form class="logging-box">
+        <div class="title">
+            <i class="fas fa-sign-in-alt sign-icon"></i>
+            <h3>Sign in</h3>
+        </div>
+      <p>Sign in if you have an account.</p>
+       <input type="email" name="email" placeholder="Email">
+       <input type="password" name="password" placeholder="Password">
+       <a href="#" id="forgot">Forgot password</a>
+       <button type="submit" name="button"><i class="fas fa-sign-in-alt"></i> Sign in</button>
+    </form>
+    <form class="logging-box">
+        <div class="title">
+            <i class="fas fa-user-plus sign-icon"></i>
+            <h3>I am new here</h3>
+         </div>
+      <p>Sign up! After a quick verification your account will be active.</p>
+      <input type="text" name="nick" placeholder="Nick">
+      <input type="email" name="email" placeholder="Email">
+      <input type="password" name="password" placeholder="Password">
+      <input type="password" name="password" placeholder="Repeat password">
+      <input type="checkbox" id="rules" name="rules" value="1">
+      <label for="rules">I accept terms and conditions</label>
+      <button type="submit" name="button"><i class="fas fa-user-plus"></i> Sign Up</button>
+    </form>
 	</div>
     <script src="https://code.jquery.com/jquery-3.3.1.js"integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.js"></script>
-    <script src="js/chessboard-0.3.0.js"></script>
     <script src="js/navLogic.js">
 
     </script>

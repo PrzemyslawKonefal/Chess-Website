@@ -114,7 +114,7 @@ $_SESSION['Table'] = "defense"
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.js"></script>
     <script src="../js/chessboard-0.3.0.js"></script>
-    <script src="../js/js.js"></script>
+    <script src="../js/combinationsLogic.js"></script>
     <script src="../js/navLogic.js"></script>
 
     </script>
