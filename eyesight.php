@@ -1,3 +1,6 @@
+<?php session_start();
+$_SESSION['location'] = "eyesight.php";
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -36,24 +39,6 @@
       <a href="matches"> <i class="fas fa-chess-pawn nav-icon"></i> Matches</a>
       <a href="eyesight.php"><i class="fas fa-eye nav-icon"></i> Eyesight</a>
       <a href="rules.php"><i class="fas fa-book nav-icon"></i> Game rules</a>
-              <div class="dropdown">
-                <a href="sign.php"><i class="fas fa-sign-in-alt nav-icon"></i> Sign in</a>
-                <div class="dropdown-content">
-                  <div class="container">
-                    <p>User:</p>
-                    <input type="text" name="" value="">
-                  </div>
-                  <div class="container">
-                    <p>Password:</p>
-                    <input type="password" name="" value="">
-                  </div>
-                  <div class="container">
-                    <button type="button" class="btn btn-success" name="button">Sign in</button>
-                    <button type="button" class="btn btn-warning" name="button"><a href="sign.php" style="color: #000;">Sign up</a></button>
-                  </div>
-                  <a href="#" id="forgot">Forgot password</a>
-               </div>
-             </div>
                 <div class="resize">
                   <i class="fas fa-window-maximize nav-icon"></i> <span style="text-decoration: underline;">Resize board</span>
                   <div class="nav-row">
@@ -75,6 +60,12 @@
                 </div>
                 <a href="about.php"><i class="fab fa-delicious nav-icon"></i> About</a>
                 <a href="contact.php"><i class="fas fa-envelope nav-icon"></i> Contact</a>
+                <?php if(isset($_SESSION['UserData'])){
+                  echo "<a href='ServerScripts/myAccount.php' style = 'margin-top:20px;'><i class='fas fa-user nav-icon'></i> ".$_SESSION['UserData']['nick']."</a>";
+                  echo "<a href='ServerScripts/logout.php'><i class='fas fa-sign-in-alt nav-icon'></i> Log out</a>";
+                }
+                else echo "<a href='sign.php' style = 'margin-top:20px;'><i class='fas fa-sign-in-alt nav-icon'></i> Sign in</a>"
+                ?>
     </nav>
     <div class="grid">
         <div class="box">

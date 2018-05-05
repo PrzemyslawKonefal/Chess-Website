@@ -3,6 +3,7 @@ session_start();
 $_SESSION['ID'] = -1;
 $_SESSION['movesCounter'] = 0;
 $_SESSION['Table'] = "checkmates2";
+$_SESSION['location'] = "index.php"
  ?>
 <!DOCTYPE html>
 <html>
@@ -42,24 +43,6 @@ $_SESSION['Table'] = "checkmates2";
       <a href="matches"> <i class="fas fa-chess-pawn nav-icon"></i> Matches</a>
       <a href="eyesight.php"><i class="fas fa-eye nav-icon"></i> Eyesight</a>
       <a href="rules.php"><i class="fas fa-book nav-icon"></i> Game rules</a>
-              <div class="dropdown">
-                <a href="sign.php"><i class="fas fa-sign-in-alt nav-icon"></i> Sign in</a>
-                <div class="dropdown-content">
-                  <div class="container">
-                    <p>User:</p>
-                    <input type="text" name="" value="">
-                  </div>
-                  <div class="container">
-                    <p>Password:</p>
-                    <input type="password" name="" value="">
-                  </div>
-                  <div class="container">
-                    <button type="button" class="btn btn-success" name="button">Sign in</button>
-                    <button type="button" class="btn btn-warning" name="button"><a href="sign.php" style="color: #000;">Sign up</a></button>
-                  </div>
-                  <a href="#" id="forgot">Forgot password</a>
-               </div>
-             </div>
                 <div class="resize">
                   <i class="fas fa-window-maximize nav-icon"></i> <span style="text-decoration: underline;">Resize board</span>
                   <div class="nav-row">
@@ -81,6 +64,12 @@ $_SESSION['Table'] = "checkmates2";
                 </div>
                 <a href="about.php"><i class="fab fa-delicious nav-icon"></i> About</a>
                 <a href="contact.php"><i class="fas fa-envelope nav-icon"></i> Contact</a>
+                <?php if(isset($_SESSION['UserData'])){
+                  echo "<a href='ServerScripts/myAccount.php' style = 'margin-top:20px;'><i class='fas fa-user nav-icon'></i> ".$_SESSION['UserData']['nick']."</a>";
+                  echo "<a href='ServerScripts/logout.php'><i class='fas fa-sign-in-alt nav-icon'></i> Log out</a>";
+                }
+                else echo "<a href='sign.php' style = 'margin-top:20px;'><i class='fas fa-sign-in-alt nav-icon'></i> Sign in</a>"
+                ?>
     </nav>
     <div class="grid">
         <div class="box">
@@ -148,15 +137,7 @@ $_SESSION['Table'] = "checkmates2";
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.js"></script>
     <script src="js/chessboard-0.3.0.js"></script>
-<<<<<<< HEAD
     <script src="js/combinationsLogic.js"></script>
-=======
-<<<<<<< HEAD
-    <script src="js/combinationsLogic.js"></script>
-=======
-    <script src="js/js.js"></script>
->>>>>>> 85bdd2b8fa80536443035734bd97dd1645b8d730
->>>>>>> 1c1b3b7a4e9dcf26ed7d4edd453193ab977cb23d
     <script src="js/navLogic.js">
 
     </script>

@@ -1,4 +1,6 @@
-
+<?php session_start();
+if(isset($_SESSION['UserData'])) {header('Location: index.php'); exit();}
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -29,24 +31,6 @@
       <a href="matches"> <i class="fas fa-chess-pawn nav-icon"></i> Matches</a>
       <a href="eyesight.php"><i class="fas fa-eye nav-icon"></i> Eyesight</a>
       <a href="rules.php"><i class="fas fa-book nav-icon"></i> Game rules</a>
-              <div class="dropdown">
-                <a href="sign.php"><i class="fas fa-sign-in-alt nav-icon"></i> Sign in</a>
-                <div class="dropdown-content">
-                  <div class="container">
-                    <p>User:</p>
-                    <input type="text" name="" value="">
-                  </div>
-                  <div class="container">
-                    <p>Password:</p>
-                    <input type="password" name="" value="">
-                  </div>
-                  <div class="container">
-                    <button type="button" class="btn btn-success" name="button">Sign in</button>
-                    <button type="button" class="btn btn-warning" name="button"><a href="sign.php" style="color: #000;">Sign up</a></button>
-                  </div>
-                  <a href="#" id="forgot">Forgot password</a>
-               </div>
-             </div>
                 <div class="resize">
                   <i class="fas fa-window-maximize nav-icon"></i> <span style="text-decoration: underline;">Resize board</span>
                   <div class="nav-row">
@@ -68,31 +52,38 @@
                 </div>
                 <a href="about.php"><i class="fab fa-delicious nav-icon"></i> About</a>
                 <a href="contact.php"><i class="fas fa-envelope nav-icon"></i> Contact</a>
+                <?php if(isset($_SESSION['UserData'])){
+                  echo "<a href='ServerScripts/myAccount.php' style = 'margin-top:20px;'><i class='fas fa-user nav-icon'></i> ".$_SESSION['UserData']['nick']."</a>";
+                  echo "<a href='ServerScripts/logout.php'><i class='fas fa-sign-in-alt nav-icon'></i> Log out</a>";
+                }
+                else echo "<a href='sign.php' style = 'margin-top:20px;'><i class='fas fa-sign-in-alt nav-icon'></i> Sign in</a>"
+                ?>
     </nav>
 
 	<div class = "main" id="login-container">
-		<form class="logging-box">
+		<form class="logging-box" action="ServerScripts/signIn.php" method="post">
         <div class="title">
             <i class="fas fa-sign-in-alt sign-icon"></i>
             <h3>Sign in</h3>
         </div>
       <p>Sign in if you have an account.</p>
-       <input type="email" name="email" placeholder="Email">
-       <input type="password" name="password" placeholder="Password">
+       <input type="email" name="email" placeholder="Email" required>
+       <input type="password" name="password" placeholder="Password" required>
+       <?php if(isset($_SESSION['Log_Err'])) echo $_SESSION['Log_Err']; unset($_SESSION['Log_Err']);?>
        <a href="#" id="forgot">Forgot password</a>
        <button type="submit" name="button"><i class="fas fa-sign-in-alt"></i> Sign in</button>
     </form>
-    <form class="logging-box">
+    <form class="logging-box" action="ServerScripts/signUp.php" method="post">
         <div class="title">
             <i class="fas fa-user-plus sign-icon"></i>
             <h3>I am new here</h3>
          </div>
       <p>Sign up! After a quick verification your account will be active.</p>
-      <input type="text" name="nick" placeholder="Nick">
-      <input type="email" name="email" placeholder="Email">
-      <input type="password" name="password" placeholder="Password">
-      <input type="password" name="password" placeholder="Repeat password">
-      <input type="checkbox" id="rules" name="rules" value="1">
+      <input type="text" name="nick" placeholder="Nick" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <input type="password" name="password" placeholder="Repeat password" required>
+      <input type="checkbox" id="rules" name="rules" value="1" required>
       <label for="rules">I accept terms and conditions</label>
       <button type="submit" name="button"><i class="fas fa-user-plus"></i> Sign Up</button>
     </form>
