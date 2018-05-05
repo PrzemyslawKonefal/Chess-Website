@@ -15,23 +15,28 @@ session_start();
          $email = $_POST['email'];
          $password = $_POST['password'];
          $email = htmlentities($email, ENT_QUOTES, "UTF-8");
-         $password = htmlentities($password, ENT_QUOTES, "UTF-8");
 
          if($result = @$connection->query(
-           sprintf("SELECT * FROM users WHERE email = '%s' AND password = '%s'",
-           mysqli_real_escape_string($connection, $email),
-           mysqli_real_escape_string($connection, $password)))){
+           sprintf("SELECT * FROM users WHERE email = '%s'",
+           mysqli_real_escape_string($connection, $email)))) {
              $users_number = $result->num_rows;
              if ($users_number > 0){
                $_SESSION['UserData'] = $result->fetch_assoc();
-               header("Location: ../".$_SESSION['location']);
+
+               if (password_verify($password, $_SESSION['UserData']['pass'])){
+                 header("Location: ../".$_SESSION['location']);
+               }
+               else{
+                 unset($_SESSION['UserData']);
+                 header("Location: ../sign.php");
+               }
               }
               else
               {
                 $_SESSION['Log_Err'] = "<h5 style='color:red; text-align:center'>Nieprawidłowy login lub hasło</h5>";
                 header("Location: ../sign.php");
               }
-
+              $connection->close();
            }
        }
  ?>

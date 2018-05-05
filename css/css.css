@@ -845,7 +845,7 @@ data{
 .logging-box{
   width: 550px;
   background: #d4d4d6;
-  height: 500px;
+  height: 600px;
   margin: 10px 30px;
   padding: 20px 0;
   transition: .3s ease;
@@ -880,6 +880,10 @@ data{
   margin: auto;
   transition: .3s ease;
   margin-top: 50px;
+}
+.logging-box span{
+  padding: 15px;
+  color: #ff2929;
 }
 #rules{
   position: relative;
