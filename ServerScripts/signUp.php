@@ -36,7 +36,7 @@ if (isset($_POST['email']))
 
     $password_hash = password_hash($password1, PASSWORD_DEFAULT);
 
-    $secret = "xxx";
+    $secret = "6LdReFcUAAAAAFHgP9xmhcqASb6ugAOykoyWnhvP";
     $check_captcha = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$_POST['g-recaptcha-response']);
     $answer = json_decode($check_captcha);
 
@@ -83,10 +83,29 @@ if (isset($_POST['email']))
 
 				if ($register_valid==true)
 				{
-
-					if ($connection->query("INSERT INTO users VALUES (NULL, '$nick', '$email', '$password_hash', 1600)"))
+          $verification_code = rand(1000,7000);
+          $verification_code = password_hash($verification_code, PASSWORD_DEFAULT);
+					if ($connection->query("INSERT INTO users VALUES (NULL, '$nick', '$email', '$password_hash', '$verification_code', 0, 1600)"))
 					{
-            $_SESSION['registration_complete'] = true;
+            $to = $email;
+            $subject = 'ChessYes | Account activation';
+            $message = 'Thanks for signing up!
+                Your account has been created, you can login with the following credentials after you have activated your account by pressing the url below.
+
+                ------------------------
+                Email: '.$email.'
+                Password: '.$password.'
+                ------------------------
+
+                Please click this link to activate your account:
+                http://www.chessyes.eu/ServerScripts/verify.php?email='.$email.'&hash='.$verification_code.'
+
+                ';
+            $headers = 'From:noreply@chessyes.com' . "\r\n";
+            mail($to, $subject, $message, $headers);
+            $_SESSION['acc_created'] = array(true, $email);
+            header('Location: ../verify_email.php');
+            exit();
 					}
 					else
 					{

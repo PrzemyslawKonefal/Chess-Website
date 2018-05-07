@@ -1,5 +1,8 @@
 <?php session_start();
-if(isset($_SESSION['UserData'])) {header('Location: index.php'); exit();}
+if (!isset($_SESSION['acc_created'])) {
+  header('Location: sign.php');
+  exit();
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -8,7 +11,6 @@ if(isset($_SESSION['UserData'])) {header('Location: index.php'); exit();}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-    <script src='https://www.google.com/recaptcha/api.js?hl=en'></script>
     <link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <link rel="stylesheet" href="css/css.css">
@@ -62,52 +64,14 @@ if(isset($_SESSION['UserData'])) {header('Location: index.php'); exit();}
     </nav>
 
 	<div class = "main">
-    <?php if(isset($_SESSION['registration_complete']) && $_SESSION['registration_complete'] == true){
-      echo "<h2 style='text-align: center; color: #47ff37;'>Registration complete! Sign in now!</h2>";
-      unset($_SESSION['registration_complete']);
-    }
-    ?>
-    <div id="login-container">
-    		<form class="logging-box" action="ServerScripts/signIn.php" method="post">
-            <div class="title">
-                <i class="fas fa-sign-in-alt sign-icon"></i>
-                <h3>Sign in</h3>
-            </div>
-          <p>Sign in if you have an account.</p>
-           <input type="email" name="email" placeholder="Email" required>
-           <input type="password" name="password" placeholder="Password" required>
-           <?php if(isset($_SESSION['Log_Err'])) echo $_SESSION['Log_Err']; unset($_SESSION['Log_Err']);?>
-           <a href="#" id="forgot">Forgot password</a>
-           <button type="submit" name="button"><i class="fas fa-sign-in-alt"></i> Sign in</button>
-        </form>
-        <form class="logging-box" action="ServerScripts/signUp.php" method="post">
-            <div class="title">
-                <i class="fas fa-user-plus sign-icon"></i>
-                <h3>I am new here</h3>
-             </div>
-          <p>Sign up! After a quick verification your account will be active.</p>
-          <input type="text" name="nick" placeholder="Nick" required>
-          <?php if(isset($_SESSION['Sign_Nick_Err'])) echo "<span>".$_SESSION['Sign_Nick_Err']."</span>"; unset($_SESSION['Sign_Nick_Err']);?>
-          <input type="email" name="email" placeholder="Email" required>
-          <?php if(isset($_SESSION['Sign_Email_Err'])) echo "<span>".$_SESSION['Sign_Email_Err']."</span>"; unset($_SESSION['Sign_Email_Err']);?>
-          <input type="password" name="password" placeholder="Password" required>
-          <?php if(isset($_SESSION['Sign_password_Err'])) echo "<span>".$_SESSION['Sign_password_Err']."</span>"; unset($_SESSION['Sign_password_Err']);?>
-          <input type="password" name="password2" placeholder="Repeat password" required>
-          <?php if(isset($_SESSION['Sign_password2_Err'])) echo "<span>".$_SESSION['Sign_password2_Err']."</span>"; unset($_SESSION['Sign_password2_Err']);?>
-          <input type="checkbox" id="rules" name="rules" value="1" required>
-          <label for="rules">I accept terms and conditions</label>
-          <div style="padding-left:15px;"> <div class="g-recaptcha" data-sitekey="6LdReFcUAAAAALdI7JudRomp4WsFoqxenmKmCYyl"></div></div>
-          <?php if(isset($_SESSION['Sign_Captcha_Err'])) echo "<span>".$_SESSION['Sign_Captcha_Err']."</span>"; unset($_SESSION['Sign_Captcha_Err']);?>
-          <button type="submit" name="button"><i class="fas fa-user-plus"></i> Sign Up</button>
-        </form>
-    </div>
+    <h1 class="main-header">Your account has been created.</h1>
+    <p class="main-header" style="font-size: 2em;"> To activate your account you need to verify the email. We have sent the activation link to <br> <?php echo $_SESSION['acc_created'][1];?>. <br>Keep in mind that sending the email with verification code may take up to few minutes. </p>
 	</div>
     <script src="https://code.jquery.com/jquery-3.3.1.js"integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.js"></script>
-    <script src="js/navLogic.js">
-
-    </script>
+    <script src="js/navLogic.js"></script>
+    <?php unset($_SESSION['acc_created']); ?>
   </body>
 </html>
